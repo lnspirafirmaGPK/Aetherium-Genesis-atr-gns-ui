@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHERIUM GENESIS // OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #050508;
+            --text-main: #e0e0e0;
+            --accent: #00f3ff;
+            --panel-bg: rgba(20, 20, 25, 0.8);
+        }
+        .light-mode {
+            --bg-primary: #f5f5f7;
+            --text-main: #1d1d1f;
+            --accent: #0071e3;
+            --panel-bg: rgba(255, 255, 255, 0.8);
+        }
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            transition: all 0.5s ease;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+        .drawer {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .drawer.open { transform: translateX(0); }
+        
+        /* Spiritcloth Mini-Pulse */
+        #mini-pulse {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+            opacity: 0.3;
+            filter: blur(2px);
+        }
+    </style>
+</head>
+<body class="flex h-screen">
+
+    <main class="flex-1 flex flex-col relative">
+        <header class="p-6 flex justify-between items-center border-b border-white/5">
+            <div class="flex items-center gap-3">
+                <div id="status-dot" class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                <h1 class="font-bold tracking-widest text-sm opacity-80 uppercase">Aetherium Genesis</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="toggleTheme()" class="opacity-50 hover:opacity-100 transition"><i class="fas fa-circle-half-stroke"></i></button>
+                <button onclick="toggleDrawer()" class="text-xl opacity-70 hover:opacity-100"><i class="fas fa-bars-staggered"></i></button>
+            </div>
+        </header>
+
+        <div id="chat-output" class="flex-1 p-8 overflow-y-auto space-y-6 max-w-3xl mx-auto w-full">
+            <div class="opacity-40 text-xs text-center uppercase tracking-[0.3em] py-10">System Initialized // Ready for Input</div>
+        </div>
+
+        <div class="p-8 max-w-3xl mx-auto w-full">
+            <div class="relative flex items-center">
+                <input type="text" placeholder="พิมพ์คำสั่งหรือความรู้สึก..." 
+                    class="w-full bg-transparent border-b border-white/10 p-4 focus:outline-none focus:border-cyan-500 transition-colors">
+                <button class="absolute right-4 opacity-50"><i class="fas fa-arrow-up-long"></i></button>
+            </div>
+        </div>
+
+        <div id="mini-pulse"></div>
+    </main>
+
+    <aside id="drawer" class="drawer fixed top-0 right-0 h-full w-80 p-6 z-50 border-l border-white/5 glass-panel" style="background: var(--panel-bg); backdrop-filter: blur(20px);">
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="font-bold uppercase text-xs tracking-widest opacity-60">Control Modules</h2>
+            <button onclick="toggleDrawer()"><i class="fas fa-xmark"></i></button>
+        </div>
+
+        <div class="space-y-8">
+            <div class="space-y-2">
+                <label class="text-[10px] uppercase opacity-40">System Vitality (Pulse)</label>
+                <div class="h-12 bg-black/20 rounded-lg flex items-center justify-center border border-white/5">
+                     <canvas id="drawer-pulse" class="w-full h-8"></canvas>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition cursor-pointer">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-sparkles text-cyan-400"></i>
+                    <span class="text-sm font-semibold">Soulful Guide</span>
+                </div>
+            </div>
+
+            <div class="space-y-4 pt-4 border-t border-white/5">
+                <div class="flex justify-between text-[10px] opacity-60 uppercase"><span>Entropy</span><span>12%</span></div>
+                <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                    <div class="bg-red-500 h-full w-[12%]"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="absolute bottom-6 left-6 right-6 text-[10px] opacity-30 text-center">
+            GENESIS SECTOR 9 // REFORGE PROTOCOL
+        </footer>
+    </aside>
+
+    <script>
+        function toggleDrawer() {
+            document.getElementById('drawer').classList.toggle('open');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        // ตัวอย่างการส่งข้อความ
+        document.querySelector('input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && this.value) {
+                const output = document.getElementById('chat-output');
+                output.innerHTML += `<div class="flex flex-col items-end"><div class="bg-white/5 p-4 rounded-2xl rounded-tr-none max-w-[80%] text-sm">${this.value}</div></div>`;
+                this.value = '';
+                output.scrollTop = output.scrollHeight;
+            }
+        });
+    </script>
+</body>
+  <script src="js/core.js"></script>
+</html>
